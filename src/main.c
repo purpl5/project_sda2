@@ -1,6 +1,11 @@
 #include "../header/base.h"
+#include "../header/relation.h"
 
 int main() {
+    rtype test = 2;
+    printf("%d %d %d\n", est_lien_parente(test), est_lien_professionel(test), est_lien_connaissance(test));
+    printf("%s\n", toStringRelation(test));
+
     /*
     int i, j;
     Relations r;

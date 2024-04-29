@@ -4,32 +4,57 @@
 ////////////////////////////////////////
 // Exercice 1: Classement des Relations
 
-boolean est_lien_parente(rtype id) {
+bool est_lien_parente(rtype id) {
+    if (id >= 2 && id <= 6)
+        return true;
+
     return false;
-}
-boolean est_lien_professionel(rtype id) {
-    return false;
-}
-boolean est_lien_connaissance(rtype id) {
-    return false;
-}
-char* toStringRelation(rtype id) {
-    return "";
 }
 
-/*
+bool est_lien_professionel(rtype id) {
+    if (id == 10 && id == 11)
+        return true;
+
+    return false;
+}
+
+bool est_lien_connaissance(rtype id) {
+    if (id >= 7 && id <= 9)
+        return true;
+
+    return false;
+}
+
+char* toStringRelation(rtype id) {
+    char* relations[15] = {"frère ou soeur de",
+                           "cousin ou cousine de",
+                           "parent de",
+                           "oncle ou tante de",
+                           "époux ou épouse de",
+                           "ami(e) de",
+                           "vit à",
+                           "connaît",
+                           "chef de",
+                           "collègue de",
+                           "locataire de",
+                           "travaille pour",
+                           "propriétaire de",
+                           "est situé(e) à",
+                           "a découvert"};
+
+    return relations[id - 2];
+}
+
+
 
 ////////////////////////////////////////
 // Exercice 2: Liste de pointeurs
 
-typedef struct s_node {
-    void* val;  // pointeur vers objet quelconque
-    struct s_node* suiv;
-} * listeg;
-
 listeg listegnouv() {
-    return NULL;
+    return (listeg) NULL;
 }
+
+/*
 listeg adjtete(listeg lst, void* x) {
     return lst;
 }
