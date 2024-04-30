@@ -69,29 +69,73 @@ listeg adjtete(listeg lst, void* x) {
 }
 
 listeg adjqueue(listeg lst, void* x) {
-    return lst;
+    listeg new = (listeg) malloc(sizeof(struct s_node));
+    new->val = x;
+    new->suiv = NULL;
+
+    if (new == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (lst == NULL) return new;
+
+    listeg tmp = lst;
+    while (tmp->suiv != NULL) tmp = tmp->suiv;
+
+    tmp->suiv = new;
+
+    return lst; 
+}
+
+void supprimer(listeg item) {
+    if (item == NULL) return;
+    item->suiv = NULL;
+
+    free(item->val);
+    free(item);
 }
 
 listeg suptete(listeg lst) {
-    return lst;
+    if (lst == NULL) exit(1);
+
+    listeg next = lst->suiv;
+    supprimer(lst);
+
+    return next;
 }
 
 void* tete(listeg lst) {
-    return NULL;
+    if (lst == NULL) exit(EXIT_FAILURE);
+    return lst->val;
 }
 
 int longueur(listeg lst) {
-    return -1;
+    if (lst == NULL) return 0;
+    return 1 + longueur (lst->suiv);
 }
 
 bool estvide(listeg lst) {
-    return false;
+    return lst == NULL ? true : false;
 }
 
-void detruire(listeg lst) {}
+void detruire(listeg lst) {
+    while (lst != NULL) {
+        listeg next = lst->suiv;
+        supprimer(lst);
+        lst = next;
+    }
+}
 
 listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
-    return NULL;
+    listeg result = (listeg) malloc(sizeof(struct s_node));
+
+    while (lst != NULL) {
+        if (comp(lst->val, x) == 0) adjtete(result, lst->val);
+        lst = lst->suiv;
+    }
+
+    return result;
 }
 
 /*

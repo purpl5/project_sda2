@@ -33,4 +33,14 @@ bool est_lien_professionel(rtype id);
 bool est_lien_connaissance(rtype id);
 char* toStringRelation(rtype id);
 
+listeg listegnouv();
+listeg adjtete(listeg lst, void* x);
+listeg adjqueue(listeg lst, void* x) ;
+void supprimer(listeg item);
+void* tete(listeg lst);
+int longueur(listeg lst);
+bool estvide(listeg lst);
+void detruire(listeg lst);
+listeg rech(listeg lst, void* x, int (*comp)(void*, void*));
+
 #endif
