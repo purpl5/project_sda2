@@ -54,13 +54,24 @@ listeg listegnouv() {
     return (listeg) NULL;
 }
 
-/*
+
 listeg adjtete(listeg lst, void* x) {
-    return lst;
+    listeg new = (listeg) malloc(sizeof(struct s_node));
+    if (new == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    new->suiv = lst;
+	new->val = x;
+
+    return new;
 }
+
 listeg adjqueue(listeg lst, void* x) {
     return lst;
 }
+
 listeg suptete(listeg lst) {
     return lst;
 }
@@ -68,17 +79,22 @@ listeg suptete(listeg lst) {
 void* tete(listeg lst) {
     return NULL;
 }
+
 int longueur(listeg lst) {
     return -1;
 }
+
 bool estvide(listeg lst) {
     return false;
 }
+
 void detruire(listeg lst) {}
+
 listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
     return NULL;
 }
 
+/*
 ////////////////////////////////////////
 // Exercice 3: Construction du graphe
 
