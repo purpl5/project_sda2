@@ -207,29 +207,56 @@ Arc nouvArc(Entite e, rtype type) {
     return NULL;
 }
 
-void relationInit(Relations* g) {}
-void relationFree(Relations* g) {}
-/*
-// 3.3 les comparaisons
-int compEntite(void* e, void* string) {
-    return 0;
-}
-int compSommet(void* s, void* string) {
-    return 0;
-}
-int compArc(void* a, void* string) {
-    return 0;
+void relationInit(Relations* g) {
+    g = (Relations*)malloc(sizeof(Relations));
+
+    if (g == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    
+    (*g)->entites = listegnouv();
 }
 
+void relationFree(Relations* g) {
+    detruire((*g)->entites);
+    free(g);
+}
+
+
+// 3.3 les comparaisons
+int compEntite(void* e, void* string) {
+    if (strcmp((char*) ((Entite) e)->nom, (char*)string) == 0)
+        return true;
+
+    return false;
+}
+
+int compSommet(void* s, void* string) {
+    return compEntite((Entite) ((Sommet)s)->x, string);
+}
+int compArc(void* a, void* string) {
+    return compEntite((Entite) ((Arc)a)->x, string);
+}
+
+
 // 3.4 ajout d'entites et de relations
-void adjEntite(Relations g, char* nom, etype t) {}
+void adjEntite(Relations g, char* nom, etype t) {
+    Entite e = creerEntite(nom, t);
+   
+    
+
+}
+
+
 // PRE CONDITION: id doit �tre coh�rent avec les types des sommets
 // correspondants � x et y
 //                p.ex si x est de type OBJET, id ne peut pas etre une relation
 //                de parente
 // PRE CONDITION: strcmp(nom1,nom2)!=0
 void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {}
-
+/*
 ////////////////////////////////////////
 // Exercice 4: Explorer les relations entre personnes
 
