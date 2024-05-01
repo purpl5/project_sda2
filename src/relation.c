@@ -142,7 +142,6 @@ listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
     return result;
 }
 
-
 ////////////////////////////////////////
 // Exercice 3: Construction du graphe
 
@@ -153,14 +152,13 @@ typedef struct s_sommet {
 } * Sommet;
 
 typedef struct s_arc {
-    rtype type; 
+    rtype type;
     struct s_entite* x;
 } * Arc;
 
 typedef struct s_relations {
     listeg entites;
 } * Relations;
-
 
 // 3.2 les constructeurs
 Entite creerEntite(char* s, etype e) {
@@ -215,7 +213,6 @@ void relationInit(Relations* g) {
         exit(EXIT_FAILURE);
     }
 
-    
     (*g)->entites = listegnouv();
 }
 
@@ -224,31 +221,25 @@ void relationFree(Relations* g) {
     free(g);
 }
 
-
 // 3.3 les comparaisons
 int compEntite(void* e, void* string) {
-    if (strcmp((char*) ((Entite) e)->nom, (char*)string) == 0)
+    if (strcmp((char*)((Entite)e)->nom, (char*)string) == 0)
         return true;
 
     return false;
 }
 
 int compSommet(void* s, void* string) {
-    return compEntite((Entite) ((Sommet)s)->x, string);
+    return compEntite((Entite)((Sommet)s)->x, string);
 }
 int compArc(void* a, void* string) {
-    return compEntite((Entite) ((Arc)a)->x, string);
+    return compEntite((Entite)((Arc)a)->x, string);
 }
-
 
 // 3.4 ajout d'entites et de relations
 void adjEntite(Relations g, char* nom, etype t) {
     Entite e = creerEntite(nom, t);
-   
-    
-
 }
-
 
 // PRE CONDITION: id doit �tre coh�rent avec les types des sommets
 // correspondants � x et y
