@@ -45,31 +45,28 @@ char* toStringRelation(rtype id) {
     return relations[id - 2];
 }
 
-
-
 ////////////////////////////////////////
 // Exercice 2: Liste de pointeurs
 
 listeg listegnouv() {
-    return (listeg) NULL;
+    return (listeg)NULL;
 }
 
-
 listeg adjtete(listeg lst, void* x) {
-    listeg new = (listeg) malloc(sizeof(struct s_node));
+    listeg new = (listeg)malloc(sizeof(struct s_node));
     if (new == NULL) {
         printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
     new->suiv = lst;
-	new->val = x;
+    new->val = x;
 
     return new;
 }
 
 listeg adjqueue(listeg lst, void* x) {
-    listeg new = (listeg) malloc(sizeof(struct s_node));
+    listeg new = (listeg)malloc(sizeof(struct s_node));
     new->val = x;
     new->suiv = NULL;
 
@@ -78,18 +75,21 @@ listeg adjqueue(listeg lst, void* x) {
         exit(EXIT_FAILURE);
     }
 
-    if (lst == NULL) return new;
+    if (lst == NULL)
+        return new;
 
     listeg tmp = lst;
-    while (tmp->suiv != NULL) tmp = tmp->suiv;
+    while (tmp->suiv != NULL)
+        tmp = tmp->suiv;
 
     tmp->suiv = new;
 
-    return lst; 
+    return lst;
 }
 
 void supprimer(listeg item) {
-    if (item == NULL) return;
+    if (item == NULL)
+        return;
     item->suiv = NULL;
 
     free(item->val);
@@ -97,7 +97,8 @@ void supprimer(listeg item) {
 }
 
 listeg suptete(listeg lst) {
-    if (lst == NULL) exit(1);
+    if (lst == NULL)
+        exit(1);
 
     listeg next = lst->suiv;
     supprimer(lst);
@@ -106,13 +107,15 @@ listeg suptete(listeg lst) {
 }
 
 void* tete(listeg lst) {
-    if (lst == NULL) exit(EXIT_FAILURE);
+    if (lst == NULL)
+        exit(EXIT_FAILURE);
     return lst->val;
 }
 
 int longueur(listeg lst) {
-    if (lst == NULL) return 0;
-    return 1 + longueur (lst->suiv);
+    if (lst == NULL)
+        return 0;
+    return 1 + longueur(lst->suiv);
 }
 
 bool estvide(listeg lst) {
@@ -128,52 +131,85 @@ void detruire(listeg lst) {
 }
 
 listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
-    listeg result = (listeg) malloc(sizeof(struct s_node));
+    listeg result = (listeg)malloc(sizeof(struct s_node));
 
     while (lst != NULL) {
-        if (comp(lst->val, x) == 0) adjtete(result, lst->val);
+        if (comp(lst->val, x) == 0)
+            adjtete(result, lst->val);
         lst = lst->suiv;
     }
 
     return result;
 }
 
-/*
+
 ////////////////////////////////////////
 // Exercice 3: Construction du graphe
 
-#define LONG_NOM_MAX 64
-typedef enum { PERSONNE = 1, OBJET, ADRESSE, VILLE } etype;
-typedef struct s_entite {
-    char nom[LONG_NOM_MAX];  // le nom de l�entit� p.ex � Peugeot 106 �
-    etype ident;             // l�identifiant associ�, p.ex OBJET
-} * Entite;
 // 3.1 les structures de donn�es
 typedef struct s_sommet {
-    // A DEFINIR
+    struct s_node* larcs;
+    struct s_entite* x;
 } * Sommet;
 
 typedef struct s_arc {
-    // A DEFINIR
+    rtype type; 
+    struct s_entite* x;
 } * Arc;
 
 typedef struct s_relations {
-    // A DEFINIR
+    listeg entites;
 } * Relations;
+
 
 // 3.2 les constructeurs
 Entite creerEntite(char* s, etype e) {
-    return NULL;
+    Entite new = (Entite)malloc(sizeof(struct s_entite));
+    if (new == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (strlen(s) > LONG_NOM_MAX) {
+        printf("fatal error: name too long.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(new->nom, s);
+    new->ident = e;
+
+    return new;
 }
 Sommet nouvSommet(Entite e) {
+    Sommet new = (Sommet)malloc(sizeof(struct s_sommet));
+    if (new == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    new->larcs = listegnouv();
+    new->x = e;
+
     return NULL;
 }
+
 Arc nouvArc(Entite e, rtype type) {
+    Arc new = (Arc)malloc(sizeof(struct s_arc));
+
+    if (new == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    new->type = type;
+    new->x = e;
+
     return NULL;
 }
+
 void relationInit(Relations* g) {}
 void relationFree(Relations* g) {}
-
+/*
 // 3.3 les comparaisons
 int compEntite(void* e, void* string) {
     return 0;
