@@ -50,4 +50,33 @@ typedef struct s_entite {
     etype ident;             // l�identifiant associ�, p.ex OBJET
 } * Entite;
 
+// 3.1 les structures de donn�es
+
+typedef struct s_sommet {
+    struct s_node* larcs;
+    struct s_entite* x;
+} * Sommet;
+
+typedef struct s_arc {
+    rtype relationType;
+    struct s_entite* x;
+} * Arc;
+
+typedef struct s_relations {
+    listeg entites;
+} * Relations;
+
+Entite creerEntite(char* s, etype e);
+Sommet nouvSommet(Entite e);
+Arc nouvArc(Entite e, rtype type);
+
+void relationInit(Relations* g);
+
+int compEntite(void* e, void* string);
+int compSommet(void* s, void* string);
+int compArc(void* a, void* string);
+
+void adjEntite(Relations g, char* nom, etype t);
+void adjRelation(Relations g, char* nom1, char* nom2, rtype id);
+
 #endif

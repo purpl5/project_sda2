@@ -1,5 +1,6 @@
 #include "../header/base.h"
 #include "../header/relation.h"
+#include "../header/verifEntiteExiste.h"
 
 ////////////////////////////////////////
 // Exercice 1: Classement des Relations
@@ -134,7 +135,7 @@ listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
     listeg result = (listeg)malloc(sizeof(struct s_node));
 
     while (lst != NULL) {
-        if (comp(lst->val, x) == 0)
+        if (comp(lst->val, x) == true)
             adjtete(result, lst->val);
         lst = lst->suiv;
     }
@@ -145,20 +146,7 @@ listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
 ////////////////////////////////////////
 // Exercice 3: Construction du graphe
 
-// 3.1 les structures de donn�es
-typedef struct s_sommet {
-    struct s_node* larcs;
-    struct s_entite* x;
-} * Sommet;
-
-typedef struct s_arc {
-    rtype type;
-    struct s_entite* x;
-} * Arc;
-
-typedef struct s_relations {
-    listeg entites;
-} * Relations;
+// 3.1 localiser dans le fichier relation.h
 
 // 3.2 les constructeurs
 Entite creerEntite(char* s, etype e) {
@@ -188,7 +176,7 @@ Sommet nouvSommet(Entite e) {
     new->larcs = listegnouv();
     new->x = e;
 
-    return NULL;
+    return new;
 }
 
 Arc nouvArc(Entite e, rtype type) {
@@ -199,16 +187,21 @@ Arc nouvArc(Entite e, rtype type) {
         exit(EXIT_FAILURE);
     }
 
-    new->type = type;
+    new->relationType = type;
     new->x = e;
 
     return NULL;
 }
 
 void relationInit(Relations* g) {
-    g = (Relations*)malloc(sizeof(Relations));
+    (*g) = (Relations)malloc(sizeof(struct s_relations));
 
     if (g == NULL) {
+        printf("fatal error: no memory allocation possible.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if ((*g) == NULL) {
         printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
@@ -239,6 +232,21 @@ int compArc(void* a, void* string) {
 // 3.4 ajout d'entites et de relations
 void adjEntite(Relations g, char* nom, etype t) {
     Entite e = creerEntite(nom, t);
+    Sommet s = nouvSommet(e);
+
+    if (g->entites == NULL) {
+        g->entites = adjtete(g->entites, s);
+        return;
+    }
+        
+    if (verifEntiteExiste(g->entites, e) == true) {
+        printf("fatal error: entity already exists.\n");
+        exit(EXIT_FAILURE);
+    } else {
+        g->entites = adjqueue(g->entites, s);
+    }
+    
+    return;
 }
 
 // PRE CONDITION: id doit �tre coh�rent avec les types des sommets
@@ -246,7 +254,25 @@ void adjEntite(Relations g, char* nom, etype t) {
 //                p.ex si x est de type OBJET, id ne peut pas etre une relation
 //                de parente
 // PRE CONDITION: strcmp(nom1,nom2)!=0
-void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {}
+
+void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
+    Relations tmp = g;
+
+    while (compEntite(((Sommet) tmp->entites->val)->x, nom1) == false) {
+        if (tmp == NULL) {
+            printf("fatal error: entity not found.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        tmp->entites = tmp->entites->suiv;
+    }
+        
+    Entite e = creerEntite(nom2, PERSONNE);
+    Arc a = nouvArc(e, id);
+
+    ((Sommet) tmp->entites->val)->larcs = adjqueue(((Sommet) tmp->entites->val)->larcs, a);
+}
+
 /*
 ////////////////////////////////////////
 // Exercice 4: Explorer les relations entre personnes

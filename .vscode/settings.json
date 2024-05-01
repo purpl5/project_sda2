@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "relation.h": "c"
+        "relation.h": "c",
+        "verifentiteexiste.h": "c",
+        "base.h": "c"
     }
 }

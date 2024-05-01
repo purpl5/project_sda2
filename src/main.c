@@ -2,15 +2,10 @@
 #include "../header/relation.h"
 
 int main() {
-    rtype test = 2;
-    printf("%d %d %d\n", est_lien_parente(test), est_lien_professionel(test),
-           est_lien_connaissance(test));
-    printf("%s\n", toStringRelation(test));
-
-    /*
-    int i, j;
+    int i;  //, j;
     Relations r;
     relationInit(&r);
+
     // ajouter les entites de l'exemple
     char* tabe[] = {"KARL",      "LUDOVIC",     "CELINE",
                     "CHLOE",     "GILDAS",      "CEDRIC",
@@ -18,9 +13,12 @@ int main() {
                     "STRASBOURG"};
     for (i = 0; i < 7; i++)
         adjEntite(r, tabe[i], PERSONNE);
+
     adjEntite(r, tabe[7], OBJET);
     adjEntite(r, tabe[8], ADRESSE);
     adjEntite(r, tabe[9], VILLE);
+
+
     // ajouter les relations de l'exemple
     adjRelation(r, tabe[0], tabe[1], FRERE);
     adjRelation(r, tabe[0], tabe[2], AMI);
@@ -34,6 +32,7 @@ int main() {
     adjRelation(r, tabe[7], tabe[8], DECOUVERT);
     adjRelation(r, tabe[8], tabe[9], SITUE);
 
+    /*
     // explorer les relations
     printf("%s est en relation avec:\n", tabe[0]);
     affichelg(en_relation(r, tabe[0]), afficheArc);

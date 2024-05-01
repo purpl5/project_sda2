@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic
+CFLAGS = -Werror -pedantic -g
 EXEC = main
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:src/%.c=obj/%.o)
@@ -20,3 +20,5 @@ format:
 	@for file in $(SRC) $(DEPS); do \
 		clang-format -i $$file; \
 	done
+
+
