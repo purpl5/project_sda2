@@ -339,13 +339,60 @@ bool ont_lien_parente(Relations g, char* x, char* y) {
     return false;
 }
 
-/*
+
 // 4.3 tester connaissances
+
+
+// fonction utile a se_connaissent
+bool ont_lien_professionel(Relations g, char* x, char* y) {
+    listeg relationX = en_relation(g, x);
+    while (relationX != NULL && compEntite(((Arc) relationX->val)->x, y) == false)
+        relationX = relationX->suiv;
+
+    if (relationX == NULL) {
+        return false;
+    } else {
+        return est_lien_professionel(((Arc) relationX->val)->relationType);
+    }
+
+    return false;
+}
+
+bool ont_lien_connaissance(Relations g, char* x, char* y) {
+    listeg relationX = en_relation(g, x);
+    while (relationX != NULL && compEntite(((Arc) relationX->val)->x, y) == false)
+        relationX = relationX->suiv;
+
+    if (relationX == NULL) {
+        return false;
+    } else {
+        return est_lien_connaissance(((Arc) relationX->val)->relationType);
+    }
+
+    return false;
+}
+
 // PRE CONDITION: les sommets correspondants � x et y sont de type PERSONNE
 // PRE CONDITION: strcmp(x,y)!=0
 bool se_connaissent(Relations g, char* x, char* y) {
+    if (ont_lien_parente(g, x, y) == true || ont_lien_professionel(g, x, y) == true || ont_lien_connaissance(g, x, y) == true)
+        return true;
+
+    listeg zList = chemin2(g, x, y);
+
+    while (zList != NULL) {
+        printf("%s %s %s \n", x, ((Entite)zList->val)->nom, y);
+
+        if (ont_lien_parente(g, x, ((Entite)zList->val)->nom) == true && ont_lien_parente(g, y, ((Entite)zList->val)->nom) == true)
+            return true;
+
+        zList = zList->suiv;
+    }
+
     return false;
 }
+
+/*
 // PRE CONDITION: les sommets correspondants � x et y sont de type PERSONNE
 // PRE CONDITION: strcmp(x,y)!=0
 bool se_connaissent_proba(Relations g, char* x, char* y) {

@@ -89,4 +89,6 @@ listeg chemin2(Relations g, char* x, char* y);
 
 bool ont_lien_parente(Relations g, char* x, char* y);
 
+bool se_connaissent(Relations g, char* x, char* y);
+
 #endif

@@ -2,6 +2,7 @@
     "files.associations": {
         "relation.h": "c",
         "verifentiteexiste.h": "c",
-        "base.h": "c"
+        "base.h": "c",
+        "string.h": "c"
     }
 }
