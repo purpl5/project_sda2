@@ -87,4 +87,6 @@ void afficheArc(void* x);
 
 listeg chemin2(Relations g, char* x, char* y);
 
+bool ont_lien_parente(Relations g, char* x, char* y);
+
 #endif

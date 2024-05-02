@@ -135,8 +135,12 @@ listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
     listeg result = (listeg)malloc(sizeof(struct s_node));
 
     while (lst != NULL) {
-        if (comp(lst->val, x) == true)
-            adjtete(result, lst->val);
+        if (comp(lst->val, x) == true) {
+            Entite e = creerEntite(((Entite)lst->val)->nom, ((Entite)lst->val)->ident);
+
+            result = adjtete(result, e);
+        }
+            
         lst = lst->suiv;
     }
 
@@ -305,7 +309,9 @@ listeg chemin2(Relations g, char* x, char* y) {
         listeg relationZ = en_relation(g, ((Arc)zList->val)->x->nom);
         while (relationZ != NULL) {
             if (compEntite(((Arc)relationZ->val)->x, y) == true) {
-                result = adjqueue(result, ((Arc)zList->val)->x);
+                Entite e = creerEntite(((Arc)relationZ->val)->x->nom, ((Arc)relationZ->val)->x->ident);
+
+                result = adjqueue(result, e);
             }
 
             relationZ = relationZ->suiv;
@@ -320,6 +326,9 @@ listeg chemin2(Relations g, char* x, char* y) {
 // 4.2 verifier un lien de parente
 // PRE CONDITION: strcmp(x,y)!=0
 bool ont_lien_parente(Relations g, char* x, char* y) {
+    listeg relationX = en_relation(g, x);
+    affichelg(relationX, afficheArc);
+
     return false;
 }
 
