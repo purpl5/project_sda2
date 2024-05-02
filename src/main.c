@@ -47,14 +47,14 @@ int main() {
         }
     printf("\n\n");
 
-    ont_lien_parente(r, tabe[0], tabe[1]);
-    /*
     for (i = 0; i < 10; i++)
         for (j = i + 1; j < 10; j++) {
             printf("<%s> et <%s> ont lien de parente: %s\n", tabe[i], tabe[j],
                    ont_lien_parente(r, tabe[i], tabe[j]) ? "vrai" : "faux");
         }
     printf("\n");
+
+    /*
     for (i = 0; i < 7; i++) {
         for (j = i + 1; j < 7; j++) {
             printf("<%s> et <%s> se connaissent: %s\n", tabe[i], tabe[j],

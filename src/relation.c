@@ -327,7 +327,14 @@ listeg chemin2(Relations g, char* x, char* y) {
 // PRE CONDITION: strcmp(x,y)!=0
 bool ont_lien_parente(Relations g, char* x, char* y) {
     listeg relationX = en_relation(g, x);
-    affichelg(relationX, afficheArc);
+    while (relationX != NULL && compEntite(((Arc) relationX->val)->x, y) == false)
+        relationX = relationX->suiv;
+
+    if (relationX == NULL) {
+        return false;
+    } else {
+        return est_lien_parente(((Arc) relationX->val)->relationType);
+    }
 
     return false;
 }
