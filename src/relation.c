@@ -256,18 +256,18 @@ void adjEntite(Relations g, char* nom, etype t) {
 // PRE CONDITION: strcmp(nom1,nom2)!=0
 
 void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
-    Relations tmp = g;
+    listeg tmp = g->entites;
 
-    while (compEntite(((Sommet) tmp->entites->val)->x, nom1) == false) {
+    while (compEntite(((Sommet) tmp->val)->x, nom1) == false) {
         if (tmp == NULL) {
             printf("fatal error: entity not found.\n");
             exit(EXIT_FAILURE);
         }
 
-        tmp->entites = tmp->entites->suiv;
+        tmp = tmp->suiv;
     }
 
-    if (((Sommet) tmp->entites->val)->x->ident == OBJET && est_lien_parente(id) == true) { 
+    if (((Sommet) tmp->val)->x->ident == OBJET && est_lien_parente(id) == true) { 
         printf("fatal error: object cannot have a parent relation.\n");
         exit(EXIT_FAILURE); 
     }
@@ -275,7 +275,7 @@ void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
     Entite e = creerEntite(nom2, PERSONNE);
     Arc a = nouvArc(e, id);
 
-    ((Sommet) tmp->entites->val)->larcs = adjqueue(((Sommet) tmp->entites->val)->larcs, a);
+    ((Sommet) tmp->val)->larcs = adjqueue(((Sommet) tmp->val)->larcs, a);
 }
 
 ////////////////////////////////////////
@@ -295,16 +295,18 @@ listeg en_relation(Relations g, char* x) {
 
     return ((Sommet) g->entites->val)->larcs;
 }
-/*
+
 listeg chemin2(Relations g, char* x, char* y) {
     return NULL;
 }
+
 // 4.2 verifier un lien de parente
 // PRE CONDITION: strcmp(x,y)!=0
 bool ont_lien_parente(Relations g, char* x, char* y) {
     return false;
 }
 
+/*
 // 4.3 tester connaissances
 // PRE CONDITION: les sommets correspondants � x et y sont de type PERSONNE
 // PRE CONDITION: strcmp(x,y)!=0

@@ -35,8 +35,7 @@ int main() {
 
     // explorer les relations
     printf("%s est en relation avec:\n", tabe[0]);
-    affichelg(r->entites, afficheEntite);
-    //affichelg(en_relation(r, tabe[0]), afficheArc);
+    affichelg(en_relation(r, tabe[0]), afficheArc);
     printf("\n");
 
     /*
