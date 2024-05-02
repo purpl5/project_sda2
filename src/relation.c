@@ -297,6 +297,17 @@ listeg en_relation(Relations g, char* x) {
 }
 
 listeg chemin2(Relations g, char* x, char* y) {
+    listeg result = listegnouv();
+    listeg zList = en_relation(g, x);
+
+    while (zList != NULL) {
+        listeg relationZ = en_relation(g, ((Arc) zList->val)->x->nom);
+
+        affichelg(relationZ, afficheArc);
+
+        zList = zList->suiv;
+    }
+
     return NULL;
 }
 

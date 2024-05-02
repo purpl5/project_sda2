@@ -85,4 +85,6 @@ void affichelg(listeg l, void (*aff)(void*));
 void afficheEntite(void* x);
 void afficheArc(void* x);
 
+listeg chemin2(Relations g, char* x, char* y);
+
 #endif

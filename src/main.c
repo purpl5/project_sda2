@@ -37,6 +37,7 @@ int main() {
     printf("%s est en relation avec:\n", tabe[0]);
     affichelg(en_relation(r, tabe[0]), afficheArc);
     printf("\n");
+    chemin2(r, tabe[5], tabe[0]);
 
     /*
     for (i = 0; i < 7; i++)
