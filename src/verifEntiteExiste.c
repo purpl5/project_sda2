@@ -4,12 +4,11 @@
 
 bool verifEntiteExiste(listeg lst, Entite e) {
     while (lst != NULL) {
-        if (compEntite(((Sommet) lst->val)->x, e->nom) == true)
+        if (compEntite(((Sommet)lst->val)->x, e->nom) == true)
             return true;
-        
 
         lst = lst->suiv;
     }
 
     return false;
-}   
+}

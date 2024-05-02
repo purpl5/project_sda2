@@ -2,7 +2,7 @@
 #include "../header/relation.h"
 
 int main() {
-    int i;  //, j;
+    int i, j;
     Relations r;
     relationInit(&r);
 
@@ -18,7 +18,6 @@ int main() {
     adjEntite(r, tabe[8], ADRESSE);
     adjEntite(r, tabe[9], VILLE);
 
-
     // ajouter les relations de l'exemple
     adjRelation(r, tabe[0], tabe[1], FRERE);
     adjRelation(r, tabe[0], tabe[2], AMI);
@@ -32,14 +31,11 @@ int main() {
     adjRelation(r, tabe[7], tabe[8], DECOUVERT);
     adjRelation(r, tabe[8], tabe[9], SITUE);
 
-
     // explorer les relations
     printf("%s est en relation avec:\n", tabe[0]);
     affichelg(en_relation(r, tabe[0]), afficheArc);
     printf("\n");
-    chemin2(r, tabe[5], tabe[0]);
 
-    /*
     for (i = 0; i < 7; i++)
         for (j = i + 1; j < 10; j++) {
             printf("<%s> et <%s> ont les relations communes:\n", tabe[i],
@@ -50,7 +46,7 @@ int main() {
             detruire(ch);
         }
     printf("\n\n");
-
+    /*
     for (i = 0; i < 10; i++)
         for (j = i + 1; j < 10; j++) {
             printf("<%s> et <%s> ont lien de parente: %s\n", tabe[i], tabe[j],
