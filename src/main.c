@@ -32,12 +32,14 @@ int main() {
     adjRelation(r, tabe[7], tabe[8], DECOUVERT);
     adjRelation(r, tabe[8], tabe[9], SITUE);
 
-    /*
+
     // explorer les relations
     printf("%s est en relation avec:\n", tabe[0]);
-    affichelg(en_relation(r, tabe[0]), afficheArc);
+    affichelg(r->entites, afficheEntite);
+    //affichelg(en_relation(r, tabe[0]), afficheArc);
     printf("\n");
 
+    /*
     for (i = 0; i < 7; i++)
         for (j = i + 1; j < 10; j++) {
             printf("<%s> et <%s> ont les relations communes:\n", tabe[i],

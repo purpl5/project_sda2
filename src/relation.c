@@ -190,7 +190,7 @@ Arc nouvArc(Entite e, rtype type) {
     new->relationType = type;
     new->x = e;
 
-    return NULL;
+    return new;
 }
 
 void relationInit(Relations* g) {
@@ -266,6 +266,11 @@ void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
 
         tmp->entites = tmp->entites->suiv;
     }
+
+    if (((Sommet) tmp->entites->val)->x->ident == OBJET && est_lien_parente(id) == true) { 
+        printf("fatal error: object cannot have a parent relation.\n");
+        exit(EXIT_FAILURE); 
+    }
         
     Entite e = creerEntite(nom2, PERSONNE);
     Arc a = nouvArc(e, id);
@@ -273,14 +278,24 @@ void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
     ((Sommet) tmp->entites->val)->larcs = adjqueue(((Sommet) tmp->entites->val)->larcs, a);
 }
 
-/*
 ////////////////////////////////////////
 // Exercice 4: Explorer les relations entre personnes
 
 // 4.1 listes de relations
 listeg en_relation(Relations g, char* x) {
-    return NULL;
+    while (compEntite(((Sommet) g->entites->val)->x, x) == false) {
+        if (g == NULL) {
+            printf("fatal error: entity not found.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        g->entites  = g->entites->suiv;
+    }
+
+
+    return ((Sommet) g->entites->val)->larcs;
 }
+/*
 listeg chemin2(Relations g, char* x, char* y) {
     return NULL;
 }
@@ -306,16 +321,27 @@ bool se_connaissent_proba(Relations g, char* x, char* y) {
 bool se_connaissent_peutetre(Relations g, char* x, char* y) {
     return false;
 }
-
+*/
 ////////////////////////////////////////
 // Exercice 5: Affichages
 
-void affichelg(listeg l, void (*aff)(void*)) {}
+void affichelg(listeg l, void (*aff)(void*)) {
+    while (l != NULL) {
+        aff(l->val);
+        l = l->suiv;
+    }
+}
 
-void afficheEntite(void* x) {}
-void afficheArc(void* x) {}
+void afficheEntite(void* x) {
+    printf("l'entite : %s\n", ((Sommet)x)->x->nom);
+}
+
+void afficheArc(void* x) {
+    printf("a une relation %s avec %s\n", toStringRelation(((Arc) x)->relationType), ((Arc) x)->x->nom);
+}
 
 ////////////////////////////////////////
 // Exercice 6: Parcours
+/*
 void affiche_degre_relations(Relations r, char* x) {}
 */

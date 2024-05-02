@@ -79,4 +79,10 @@ int compArc(void* a, void* string);
 void adjEntite(Relations g, char* nom, etype t);
 void adjRelation(Relations g, char* nom1, char* nom2, rtype id);
 
+listeg en_relation(Relations g, char* x);
+
+void affichelg(listeg l, void (*aff)(void*));
+void afficheEntite(void* x);
+void afficheArc(void* x);
+
 #endif
