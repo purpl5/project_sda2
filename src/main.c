@@ -54,17 +54,18 @@ int main() {
         }
     printf("\n");
 
-
     for (i = 0; i < 7; i++) {
         for (j = i + 1; j < 7; j++) {
             printf("<%s> et <%s> se connaissent: %s\n", tabe[i], tabe[j],
                    se_connaissent(r, tabe[i], tabe[j]) ? "vrai" : "faux");
-            //printf("<%s> et <%s> se connaissent tres probablement: %s\n",
-            //       tabe[i], tabe[j],
-            //       se_connaissent_proba(r, tabe[i], tabe[j]) ? "vrai" : "faux");
-            //printf(
-            //    "<%s> et <%s> se connaissent peut etre: %s\n", tabe[i], tabe[j],
-            //    se_connaissent_peutetre(r, tabe[i], tabe[j]) ? "vrai" : "faux");
+            // printf("<%s> et <%s> se connaissent tres probablement: %s\n",
+            //        tabe[i], tabe[j],
+            //        se_connaissent_proba(r, tabe[i], tabe[j]) ? "vrai" :
+            //        "faux");
+            // printf(
+            //     "<%s> et <%s> se connaissent peut etre: %s\n", tabe[i],
+            //     tabe[j], se_connaissent_peutetre(r, tabe[i], tabe[j]) ?
+            //     "vrai" : "faux");
         }
         printf("\n");
     }

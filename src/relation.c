@@ -56,7 +56,8 @@ listeg listegnouv() {
 listeg adjtete(listeg lst, void* x) {
     listeg new = (listeg)malloc(sizeof(struct s_node));
     if (new == NULL) {
-        if (DEBUG) printf("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -72,7 +73,8 @@ listeg adjqueue(listeg lst, void* x) {
     new->suiv = NULL;
 
     if (new == NULL) {
-        if (DEBUG) ("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            ("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -136,11 +138,12 @@ listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
 
     while (lst != NULL) {
         if (comp(lst->val, x) == true) {
-            Entite e = creerEntite(((Entite)lst->val)->nom, ((Entite)lst->val)->ident);
+            Entite e =
+                creerEntite(((Entite)lst->val)->nom, ((Entite)lst->val)->ident);
 
             result = adjtete(result, e);
         }
-            
+
         lst = lst->suiv;
     }
 
@@ -156,12 +159,14 @@ listeg rech(listeg lst, void* x, int (*comp)(void*, void*)) {
 Entite creerEntite(char* s, etype e) {
     Entite new = (Entite)malloc(sizeof(struct s_entite));
     if (new == NULL) {
-        if (DEBUG) printf("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
     if (strlen(s) > LONG_NOM_MAX) {
-        if (DEBUG) printf("fatal error: name too long.\n");
+        if (DEBUG)
+            printf("fatal error: name too long.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -173,7 +178,8 @@ Entite creerEntite(char* s, etype e) {
 Sommet nouvSommet(Entite e) {
     Sommet new = (Sommet)malloc(sizeof(struct s_sommet));
     if (new == NULL) {
-        if (DEBUG) printf("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -187,7 +193,8 @@ Arc nouvArc(Entite e, rtype type) {
     Arc new = (Arc)malloc(sizeof(struct s_arc));
 
     if (new == NULL) {
-        if (DEBUG) printf("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -201,12 +208,14 @@ void relationInit(Relations* g) {
     (*g) = (Relations)malloc(sizeof(struct s_relations));
 
     if (g == NULL) {
-        if (DEBUG) printf("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
     if ((*g) == NULL) {
-        if (DEBUG) printf("fatal error: no memory allocation possible.\n");
+        if (DEBUG)
+            printf("fatal error: no memory allocation possible.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -244,7 +253,8 @@ void adjEntite(Relations g, char* nom, etype t) {
     }
 
     if (verifEntiteExiste(g->entites, e) == true) {
-        if (DEBUG) printf("fatal error: entity already exists.\n");
+        if (DEBUG)
+            printf("fatal error: entity already exists.\n");
         return;
     } else {
         g->entites = adjqueue(g->entites, s);
@@ -264,7 +274,8 @@ void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
 
     while (compEntite(((Sommet)tmp->val)->x, nom1) == false) {
         if (tmp == NULL) {
-            if (DEBUG) printf("fatal error: entity not found.\n");
+            if (DEBUG)
+                printf("fatal error: entity not found.\n");
             exit(EXIT_FAILURE);
         }
 
@@ -272,7 +283,8 @@ void adjRelation(Relations g, char* nom1, char* nom2, rtype id) {
     }
 
     if (((Sommet)tmp->val)->x->ident == OBJET && est_lien_parente(id) == true) {
-        if (DEBUG) printf("error: object cannot have a parent relation.\n");
+        if (DEBUG)
+            printf("error: object cannot have a parent relation.\n");
         return;
     }
 
@@ -291,7 +303,8 @@ listeg en_relation(Relations g, char* x) {
 
     while (compEntite(((Sommet)e->val)->x, x) == false) {
         if (e->suiv == NULL) {
-            if (DEBUG) printf("error: entity not found.\n");
+            if (DEBUG)
+                printf("error: entity not found.\n");
             return NULL;
         }
 
@@ -309,7 +322,8 @@ listeg chemin2(Relations g, char* x, char* y) {
         listeg relationZ = en_relation(g, ((Arc)zList->val)->x->nom);
         while (relationZ != NULL) {
             if (compEntite(((Arc)relationZ->val)->x, y) == true) {
-                Entite e = creerEntite(((Arc)relationZ->val)->x->nom, ((Arc)relationZ->val)->x->ident);
+                Entite e = creerEntite(((Arc)relationZ->val)->x->nom,
+                                       ((Arc)relationZ->val)->x->ident);
 
                 result = adjqueue(result, e);
             }
@@ -327,32 +341,32 @@ listeg chemin2(Relations g, char* x, char* y) {
 // PRE CONDITION: strcmp(x,y)!=0
 bool ont_lien_parente(Relations g, char* x, char* y) {
     listeg relationX = en_relation(g, x);
-    while (relationX != NULL && compEntite(((Arc) relationX->val)->x, y) == false)
+    while (relationX != NULL &&
+           compEntite(((Arc)relationX->val)->x, y) == false)
         relationX = relationX->suiv;
 
     if (relationX == NULL) {
         return false;
     } else {
-        return est_lien_parente(((Arc) relationX->val)->relationType);
+        return est_lien_parente(((Arc)relationX->val)->relationType);
     }
 
     return false;
 }
 
-
 // 4.3 tester connaissances
-
 
 // fonction utile a se_connaissent
 bool ont_lien_professionel(Relations g, char* x, char* y) {
     listeg relationX = en_relation(g, x);
-    while (relationX != NULL && compEntite(((Arc) relationX->val)->x, y) == false)
+    while (relationX != NULL &&
+           compEntite(((Arc)relationX->val)->x, y) == false)
         relationX = relationX->suiv;
 
     if (relationX == NULL) {
         return false;
     } else {
-        return est_lien_professionel(((Arc) relationX->val)->relationType);
+        return est_lien_professionel(((Arc)relationX->val)->relationType);
     }
 
     return false;
@@ -360,13 +374,14 @@ bool ont_lien_professionel(Relations g, char* x, char* y) {
 
 bool ont_lien_connaissance(Relations g, char* x, char* y) {
     listeg relationX = en_relation(g, x);
-    while (relationX != NULL && compEntite(((Arc) relationX->val)->x, y) == false)
+    while (relationX != NULL &&
+           compEntite(((Arc)relationX->val)->x, y) == false)
         relationX = relationX->suiv;
 
     if (relationX == NULL) {
         return false;
     } else {
-        return est_lien_connaissance(((Arc) relationX->val)->relationType);
+        return est_lien_connaissance(((Arc)relationX->val)->relationType);
     }
 
     return false;
@@ -375,18 +390,19 @@ bool ont_lien_connaissance(Relations g, char* x, char* y) {
 // PRE CONDITION: les sommets correspondants � x et y sont de type PERSONNE
 // PRE CONDITION: strcmp(x,y)!=0
 bool se_connaissent(Relations g, char* x, char* y) {
-    if (ont_lien_parente(g, x, y) == true || ont_lien_professionel(g, x, y) == true || ont_lien_connaissance(g, x, y) == true)
+    if (ont_lien_parente(g, x, y) == true ||
+        ont_lien_professionel(g, x, y) == true ||
+        ont_lien_connaissance(g, x, y) == true)
         return true;
 
-    listeg zList = chemin2(g, x, y);
+    listeg e = g->entites;
 
-    while (zList != NULL) {
-        printf("%s %s %s \n", x, ((Entite)zList->val)->nom, y);
-
-        if (ont_lien_parente(g, x, ((Entite)zList->val)->nom) == true && ont_lien_parente(g, y, ((Entite)zList->val)->nom) == true)
+    while (e != NULL) {
+        if (ont_lien_parente(g, ((Arc)e->val)->x->nom, x) == true &&
+            ont_lien_parente(g, ((Arc)e->val)->x->nom, y) == true)
             return true;
 
-        zList = zList->suiv;
+        e = e->suiv;
     }
 
     return false;
